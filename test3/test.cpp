@@ -15,6 +15,17 @@ private:
     int _month;
     int _day;
 };
+void TestDate1()
+{
+    Date d1;
+    Date d2(2015,1,1);
+    Date d3;
+}
+int main()
+{
+    TestDate1();
+    return 0;
+}
 //class Person
 //{
 //public:
