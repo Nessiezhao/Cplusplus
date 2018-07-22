@@ -7,8 +7,8 @@ public:
         std::cout<<_name<<"-"<<_sex<<"-"<<_age<<std::endl;
     }
 public:
-    char* _name;
-    char* _sex;
+    const char* _name;
+    const char* _sex;
     int _age;
 };
 
