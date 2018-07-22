@@ -11,3 +11,18 @@ public:
     char* _sex;
     int _age;
 };
+
+void Test()
+{
+    Person p;
+    p._name = "Jack";
+    p._age = 10;
+    p._sex = "男";
+    p.Display();
+}
+
+int main()
+{
+    Test();
+    return 0;
+}
