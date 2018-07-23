@@ -35,6 +35,22 @@ public:
         _month = d._month;
         _day = d._day;
     }
+
+    //析构函数
+    ~Date()
+    {}
+
+    //赋值操作符的重载
+    Date& operator=(const Date&d)
+    {
+        if(this != &d)
+        {
+            this->_year = d._year;
+            this->_month = d._month;
+            this->_day = d._day;
+        }
+        return *this;
+    }
 private:
     int _year;
     int _month;
