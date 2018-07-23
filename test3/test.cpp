@@ -1,14 +1,27 @@
 #include <iostream>
+
 class Date
 {
 public:
-    Date()
+    Date()//无参构造函数
     {}
-    Date(int year,int month,int day)
+    Date(int year,int month,int day)//带参构造函数
     {
         _year = year;
         _month = month;
         _day = day;
+    }
+//    Date(int year = 2000,int month = 1,int day = 1)//缺省参数的构造函数
+//    {
+//        _year = year;
+//        _month = month;
+//        _day = day;
+//    }
+    Date(int year,int month = 1)//半缺省参数的构造函数
+    {
+        _year = year;
+        _month = month;
+        _day = 1;
     }
 private:
     int _year;
