@@ -5,23 +5,35 @@ class Date
 public:
     Date()//无参构造函数
     {}
+    
     Date(int year,int month,int day)//带参构造函数
     {
         _year = year;
         _month = month;
         _day = day;
     }
+
 //    Date(int year = 2000,int month = 1,int day = 1)//缺省参数的构造函数
 //    {
 //        _year = year;
 //        _month = month;
 //        _day = day;
 //    }
+
     Date(int year,int month = 1)//半缺省参数的构造函数
     {
         _year = year;
         _month = month;
         _day = 1;
+    }
+
+    //拷贝构造函数
+    Date(const Date& d)//在类的成员函数中可以直接访问同类对象的私有/保护成员
+        //C++的访问限定符是以类为单位的，也就是说在这个单位内的成员可以互相访问
+    {
+        _year = d._year;
+        _month = d._month;
+        _day = d._day;
     }
 private:
     int _year;
