@@ -46,6 +46,7 @@ private:
     int _year;
     int _month;
     int _day;
+    const int _testConst;
     Time _t;
 };
 void Test()
