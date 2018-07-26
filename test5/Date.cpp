@@ -113,18 +113,17 @@ public:
         }
         Date tmp(*this) ;
         tmp._day += day;
-        while(tmp._day < 1)
+        while(tmp._day > GetMonthDay(tmp._year,tmp._month))
         {
-            tmp._month--;
-            if(tmp._month < 1)
+            tmp._day -= GetMonthDay(tmp._year,tmp._month);
+            tmp._month++;
+            if(tmp._month >12)
             {
-                tmp._year--;
-                tmp._month = 12;
+                tmp._year++;
+                tmp._month = 1;
             }
-            tmp._day += GetMonthDay(tmp._year,tmp._month-1);
          }
         return tmp;
-
     }
     Date& operator+=(int day)
     {
@@ -139,15 +138,15 @@ public:
         }
         Date tmp(*this) ;
         tmp._day -= day;
-        while(tmp._day > GetMonthDay(tmp._year,tmp._month))
+        while(tmp._day < 1)
         {
-            tmp._month++;
-            if(tmp._month > 12)
+            tmp._month--;
+            if(tmp._month < 1)
             {
-                tmp._year++;
-                tmp._month = 1;
+                tmp._year--;
+                tmp._month = 12;
             }
-            tmp._day -= GetMonthDay(tmp._year,tmp._month);
+            tmp._day += GetMonthDay(tmp._year,tmp._month);
          }
         return tmp;
     }
@@ -251,19 +250,71 @@ void Test1()
 }
 void Test2()
 {
-    Date d2(2018,7,25);
+    Date d2(2018,3,25);
     std::cout<<"d2"<<std::endl;
     d2.Show();
     std::cout<<"给d2减10天"<<std::endl;
     d2.operator-=(10);
     d2.Show();
     std::cout<<"给d2减15天"<<std::endl;
-    d2.operator-=(16);
+    d2 = d2-15;
     d2.Show();
+    std::cout<<"给d2减40天"<<std::endl;
+    d2 = d2-40;
+    d2.Show();
+}
+void Test3()
+{
+    Date d3(2017,12,3);
+    std::cout<<"d3"<<std::endl;
+    d3.Show();
+    std::cout<<"给d3加10天"<<std::endl;
+    d3.operator+=(10);
+    d3.Show();
+    std::cout<<"给d3加15天"<<std::endl;
+    d3 = d3+15;
+    d3.Show();
+    std::cout<<"给d3加35天"<<std::endl;
+    d3 = d3+35;
+    d3.Show();
+}
+void Test4()
+{
+    Date d4(2018,4,5);
+    Date d5(2018,3,19);
+    d4.Show();
+    d5.Show();
+    std::cout<<(d4-d5)<<std::endl;
+    Date d6(2018,2,5);
+    Date d7(2018,3,19);
+    d6.Show();
+    d7.Show();
+    std::cout<<(d6-d7)<<std::endl;
+    Date d8(2018,3,19);
+    Date d9(2018,3,19);
+    d8.Show();
+    d9.Show();
+    std::cout<<(d8-d9)<<std::endl;
+}
+void Test5()
+{
+    Date d1(2018,3,4);
+    d1.Show();
+    d1++;
+    d1.Show();
+    d1--;
+    d1.Show();
+    --d1;
+    d1.Show();
+    ++d1;
+    d1.Show();
 }
 int main()
 {
     Test1();
     Test2();
+    Test3();
+    Test4();
+    Test5();
     return 0;
 }
