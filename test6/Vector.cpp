@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+#include<assert.h>
 typedef int DateType;
 template<class T>
 class Vector
@@ -52,10 +53,6 @@ public:
     {
         return (_endofstorage - _first);
     }
-    void Expand(size_t n)
-    {
-
-    }
     void PushBack(const T& x)
     {
         if(_finish == _endofstorage)
@@ -66,7 +63,7 @@ public:
         *_finish = x;
         ++_finish;
     }
-    void Reserve(size_t n)
+    void Expand(size_t n)
     {
 
     }
@@ -74,13 +71,37 @@ public:
     {
         Erase(Size() - 1);
     }
-    void Insert(size_t pos,DateType x)
+    void Reserve(size_t n)
     {
 
     }
+    void Insert(size_t pos,const T& x)
+    {
+        assert(pos <= Size());
+        if(_finish == _endofstorage)
+        {
+            size_t newcapacity = Capacity() == 0 ? 3 : Capacity()*2;
+            Expand(newcapacity);
+        }
+        T* end = _finish -1;
+        while(end >= _first + pos)
+        {
+            *(end+1) = *end;
+            --end;
+        }
+        _first[pos] = x;
+        ++_finish;
+    }
     void Erase(size_t pos)
     {
-
+        assert(pos < Size());
+        T* start = _first + pos;
+        while(start < _finish-1)
+        {
+            *start = *(start+1);
+            ++start;
+        }
+        --_finish;
     }
     size_t Find(DateType x)
     {
