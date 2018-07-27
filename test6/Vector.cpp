@@ -63,9 +63,29 @@ public:
         *_finish = x;
         ++_finish;
     }
-    void Expand(size_t n)
+    void Expand(size_t newcapacity)
     {
-
+        if(newcapacity > Capacity())
+        {
+            size_t size = Size();
+            T* tmp = new T[newcapacity];
+            if(_first)
+            {
+                size_t i = 0;
+                for(i = 0;i < size ;i++)
+                {
+                    tmp[i] = _first[i];
+                }
+            }
+            _first = tmp;
+            _finish = _first + size;
+            _endofstorage = _first + newcapacity;
+        }
+    }
+    void Resize(size_t size,const T& value)
+    {
+        Expand(size);
+        memset(_first,value,sizeof(T)*size);
     }
     void PopBack()
     {
@@ -103,9 +123,17 @@ public:
         }
         --_finish;
     }
-    size_t Find(DateType x)
+    size_t Find(T x)
     {
-
+        size_t i = 0;
+        for(i = 0;i < Size();i++)
+        {
+            if(_first[i] == x)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 private:
     DateType* _first;
