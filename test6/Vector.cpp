@@ -1,4 +1,3 @@
-#pragma once
 #include<iostream>
 #include<assert.h>
 typedef int DateType;
@@ -21,6 +20,10 @@ public:
         }
         _finish = _first + v.Size();
         _endofstorage = _first + v.Size();
+    }
+    const T& operator[](size_t pos)
+    {
+        return _first[pos];
     }
     Vector<T>& operator=(const Vector<T>& v)
     {
@@ -93,7 +96,21 @@ public:
     }
     void Reserve(size_t n)
     {
-
+        if(n > Capacity())
+        {
+            T* new_first = new T[n];
+            T* new_finish = new_first;
+            T* tmp = this->begin();
+            for(tmp = this->begin();tmp != this->end();tmp++)
+            {
+                *new_first = *tmp;
+                new_finish++;
+            }
+            delete[] _first;
+            _first = new_first;
+            _finish = new_finish;
+            _endofstorage = new_first + n;
+        }
     }
     void Insert(size_t pos,const T& x)
     {
@@ -140,3 +157,36 @@ private:
     DateType* _finish;
     DateType* _endofstorage;
 };
+
+void Test1()
+{
+    Vector<int> v1;
+    v1.PushBack(1);
+    v1.PushBack(2);
+    v1.PushBack(3);
+    v1.PushBack(4);
+    v1.PushBack(5);
+    int i = 0;
+    for(i = 0;i < (int)v1.Size();++i)
+    {
+        std::cout<<v1[i]<<" ";
+    }
+    std::cout<<std::endl;
+    v1.Erase(2);
+    for(i = 0;i < (int)v1.Size();++i)
+    {
+        std::cout<<v1[i]<<" ";
+    }
+    std::cout<<std::endl;
+    v1.PopBack();
+    for(i = 0;i < (int)v1.Size();++i)
+    {
+        std::cout<<v1[i]<<" ";
+    }
+    std::cout<<std::endl;
+}
+int main()
+{
+    Test1();
+    return 0;
+}
