@@ -1,5 +1,5 @@
 List:List.cpp
-	g++  $^ -o $@
+	g++  $^ -o $@ -g
 .PHONY:clean
 clean:
 	rm -f List

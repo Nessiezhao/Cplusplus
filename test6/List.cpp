@@ -1,6 +1,5 @@
 #include<iostream>
 #include<assert.h>
-
 typedef int DateType;
 
 struct ListNode
@@ -14,7 +13,7 @@ struct ListNode
          ,_prev(NULL)
     {}
 };
-
+    typedef ListNode Node;
 class List
 {
     typedef ListNode Node;
@@ -26,23 +25,24 @@ public:
         _head->_prev = _head;
     }
     List(const List& l)
+        :_head(new Node(DateType()))
     {
-        Node* new_head = new Node(l._head->_data);
-        Node* cur1 = _head->_next;
-        Node* cur2 = new_head;
-        while(cur1 != _head){
-            Node* new_node = new Node(cur1->_data);
-            cur2->_next = new_node;
-            new_node->_prev = cur2;
-            cur1 = cur1->_next;
-            cur2 = cur2->_next;
+        _head->_next = _head;
+        _head->_prev = _head;
+        Node* cur = l._head->_next;
+        while(cur !=l._head){
+            PushBack(cur->_data);
+            cur = cur->_next;
         }
-        cur2->_next = new_head;
-        new_head->_prev = cur2;
     }
-    List& operator=(const List& l)
+    List& operator=(List l)
     {
-        
+        std::swap(_head,l._head);
+        return *this;
+    }
+    bool Empty()
+    {
+        return _head->_next == _head;
     }
     ~List()
     {
@@ -54,6 +54,7 @@ public:
             cur1 = cur2;
             cur2 = cur2->_next;
         }
+        std::cout<<"~List()"<<std::endl;
     }
 
     void PushBack(DateType x)
@@ -91,6 +92,7 @@ public:
     }
     void Insert(Node* pos,DateType x)
     {
+        //node_prev new_node pos
         assert(pos);
         Node* new_node = new Node(x);
         Node* node_prev = pos->_prev;
@@ -131,9 +133,22 @@ void Test()
     l1.PushBack(4);
     l1.PushBack(5);
     l1.Show();
-//    List l2 = l1;
-//    l2.Show();
+    std::cout<<std::endl;
+
+    List l2 = l1;
+    l2.Show();
+    std::cout<<std::endl;
+
     std::cout<<l1.Find(3)->_data<<std::endl;
+    Node* pos = l1.Find(3);
+    l1.Insert(pos,7);
+    l1.Show();
+    std::cout<<std::endl;
+
+    List l3;
+    l3 = l1;
+    l3.Show();
+    std::cout<<std::endl;
 }
 int main()
 {
