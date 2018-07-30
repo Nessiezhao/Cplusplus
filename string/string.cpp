@@ -146,18 +146,25 @@ class String
 {
 public:
     String(const char* str="")
+        :_size(strlen(str))
+        ,_capacity(_size)
     {
-
+        _str = new char(_size+1);
+        strcpy(_str,str);
     }
     //s1.Swap(s2)
     void Swap(String& s)
     {
-
+        swap(_str,s._str);
+        swap(_size,s._size);
+        swap(_capacity,s._capacity);
     }
     //String s2(s1)
     String(const String& s)
+        :_str(NULL)
     {
-
+        String tmp(s._str);//为什么传的不是s
+        this->Swap(tmp);
     }
     //s1 = s2
     String& operator=(String s)
@@ -169,6 +176,10 @@ public:
 
     }
     const char* c_str()
+    {
+
+    }
+    void Resize(size_t n, char ch = '\0')
     {
 
     }
