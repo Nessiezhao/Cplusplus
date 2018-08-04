@@ -230,6 +230,10 @@ public:
     {
         Insert(_size,ch);
     }
+    void Append(const char* str)
+    {
+        Insert(_size,str);
+    }
     void PopBack()
     {
         assert(_size > 0);
@@ -320,35 +324,66 @@ public:
     }
     String operator+(char ch)
     {
-
+        String ret(*this);
+        ret.PushBack(ch);
+        return ret;
     }
     String& operator+=(char ch)
     {
-
+        this->PushBack(ch);
+        return *this;
     }
     String operator+(const char* str)
     {
-
+        String ret(*this);
+        ret.Append(str);
+        return ret;
     }
     String& operator+=(const char* str)
     {
-        
+       this->Append(str) ;
+       return *this;
     }
     bool operator>(const String& s)
     {
-
+        return !(*this <= s);
     }
     bool operator>=(const String& s)
     {
-
+        return !(*this < s);
     }
     bool operator<(const String& s)
     {
-
+        const char* str1 = _str;
+        const char* str2 = s._str;
+        while(*str1 && *str2)
+        {
+            if(*str1 > *str2)
+            {
+                return false;
+            }
+            else if(*str1 < *str2)
+            {
+                return true;
+            }
+            else
+            {
+                ++str1;
+                ++str2;
+            }
+        }
+        if(*str1 == '\0' && *str2 != '\0')
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     bool operator<=(const String& s)
     {
-
+        return *this < s || *this == s;
     }
     bool operator==(const String& s)const
     {
@@ -383,6 +418,14 @@ private:
     size_t _size;
     size_t _capacity;
 };
+
+void Test()
+{
+    String s1 = "hello ";
+    String s2(s1);
+    cout<<s1.c_str()<<endl;
+    cout<<s2.c_str()<<endl;
+}
 int main()
 {
     Test();
