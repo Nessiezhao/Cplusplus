@@ -423,8 +423,29 @@ void Test()
 {
     String s1 = "hello ";
     String s2(s1);
-    cout<<s1.c_str()<<endl;
-    cout<<s2.c_str()<<endl;
+    cout<<"hello:"<<s1.c_str()<<endl;
+    cout<<"hello:"<<s2.c_str()<<endl;
+
+    String s3;
+    s3 = s1;
+    s3.PushBack('a');
+    s3.PushBack('b');
+    s3.PushBack('c');
+    s3.PushBack('d');
+    cout<<"hello abcd:"<<s3.c_str()<<endl;
+    s3.PopBack();
+    s3.PopBack();
+    cout<<"hello ab:"<<s3.c_str()<<endl;
+    s3.Swap(s1);
+    cout<<"hello :"<<s3.c_str()<<endl;
+    size_t x = s3.Find('e');
+    cout<<"1 :"<<x<<endl;
+    s3.Erase(2,2);
+    cout<<"heo :"<<s3.c_str()<<endl;
+    bool a = s3.operator<=(s1);
+    cout<<"0 : "<<a<<endl;
+    s1.Append("world");
+    cout<<"hello abworld : "<<s1.c_str()<<endl;
 }
 int main()
 {
