@@ -169,19 +169,50 @@ public:
     //s1 = s2
     String& operator=(String s)
     {
-
+        this->Swap(s);
+        return *this;
     }
     ~String()
     {
-
+        if(_str)
+        {
+            delete[] _str;
+            _str = NULL;
+        }
     }
     const char* c_str()
     {
-
+        return _str;
     }
+    //Capacity
+    void Reserve(size_t n)
+    {
+        Expand(n);
+    }
+    //Size + CapacityA
+    //如果n < size就保留前n个
+    //如果n > size就把size~n之间的数都用ch替换
     void Resize(size_t n, char ch = '\0')
     {
-
+        if(n < _size)
+        {
+            _size = n;
+            _str[_size] = '\0';
+        }
+        else
+        {
+            if(n > _capacity)
+            {
+                Expand(n);
+            }
+            size_t i = 0;
+            for(i = _size;i < n;++i)
+            {
+                _str[i] = ch;
+            }
+            _str[n] = '\0';
+            _size = n;
+        }
     }
     void Expand(size_t n)
     {
