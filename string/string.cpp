@@ -1,5 +1,6 @@
 #include <iostream>
 #include<string.h>
+#include<assert.h>
 using namespace std;
 
 //class String
@@ -216,11 +217,18 @@ public:
     }
     void Expand(size_t n)
     {
-
+        if(n > _capacity)
+        {
+            char *tmp = new char[n+1];
+            strcpy(tmp,_str);
+            delete[] _str;
+            _str = tmp;
+            _capacity = n;
+        }
     }
-    void PushBack(const char* str)
+    void PushBack(char ch)
     {
-
+        Insert(_size,ch);
     }
     void PopBack()
     {
@@ -228,11 +236,36 @@ public:
     }
     void Insert(size_t pos,char ch)
     {
-
+        assert(pos <= _size);
+        if(_capacity == _size)
+        {
+            Expand(_capacity * 2);
+        }
+        int end = _size;
+        while(end >= (int)pos)
+        {
+            _str[end+1] = _str[end];
+            --end;
+        }
+        _str[pos] = ch;
+        ++_size;
     }
     void Insert(size_t pos,const char* str)
     {
-
+        assert(pos <= _size);
+        size_t len = strlen(str);
+        if(len + _size > _capacity)
+        {
+            Expand(_size+len);
+        }
+        int end = _size;
+        while(end >= (int)pos)
+        {
+            _str[end+len] = _str[end];
+            --end;
+        }
+        strncpy(_str+pos,str,len);
+        _size += len;
     }
     void Erase(size_t pos,size_t n = 1)
     {
