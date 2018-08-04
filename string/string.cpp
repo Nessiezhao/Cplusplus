@@ -232,7 +232,9 @@ public:
     }
     void PopBack()
     {
-
+        assert(_size > 0);
+        --_size;
+        _str[_size] = '\0';
     }
     void Insert(size_t pos,char ch)
     {
@@ -267,17 +269,54 @@ public:
         strncpy(_str+pos,str,len);
         _size += len;
     }
-    void Erase(size_t pos,size_t n = 1)
+    void Erase(size_t pos,size_t len)
     {
-        
+        assert(pos < _size);
+        if(pos + len > _size)
+        {
+            _str[pos] = '\0';
+            _size = pos;
+        }
+        else
+        {
+            strcpy(_str+pos,_str+pos+len);
+            _size -= len;
+        }
     }
-    size_t Find(char ch)
+    size_t Find(char ch)const
     {
-
+        size_t i = 0;
+        for(i = 0;i < _size;++i)
+        {
+            if(_str[i] == ch)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
-    size_t Find(const char* str)
+    size_t Find(const char* str)const
     {
-
+        char* src = _str;
+        while(*src)
+        {
+            const char* lstr = src;
+            const char* sstr = str;
+            while(*sstr && *lstr == *sstr)
+            {
+                ++lstr;
+                ++sstr;
+            }
+            if(*sstr == '\0')
+            {
+                return src-_str;
+            }
+            else
+            {
+                ++src;
+            }
+        }
+        return -1;
     }
     String operator+(char ch)
     {
